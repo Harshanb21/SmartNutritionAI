@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇮🇳 Smart Nutrition & Exercise Companion - ML Powered</title>
+    <style>
+        :root {
+            /* Color Tokens - Professional Design System */
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-primary: var(--color-teal-500);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-brown-600-rgb: 94, 82, 64;
+            
+            /* Typography */
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-2xl: 32px;
+            
+            /* Spacing */
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-24: 24px;
+            --space-32: 32px;
+            
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--color-teal-500) 0%, var(--color-teal-600) 100%);
+            color: white;
+            padding: var(--space-32) var(--space-24);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--space-12);
+            font-weight: 600;
+        }
+        
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            background: rgba(255, 255, 255, 0.2);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-24);
+        }
+        
+        /* Card */
+        .card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+            margin-bottom: var(--space-24);
+            padding-bottom: var(--space-16);
+            border-bottom: 2px solid var(--color-gray-200);
+        }
+        
+        .card-header h2 {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        
+        .card-icon {
+            font-size: var(--font-size-xl);
+        }
+        
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-24);
+            margin-bottom: var(--space-24);
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            font-size: var(--font-size-sm);
+            color: var(--color-slate-500);
+        }
+        
+        .form-control {
+            padding: var(--space-12);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+            transition: all 0.2s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(33, 128, 141, 0.1);
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: var(--space-12) var(--space-24);
+            border: none;
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            width: 100%;
+            padding: var(--space-16);
+            font-size: var(--font-size-lg);
+        }
+        
+        .btn-primary:hover {
+            background: var(--color-teal-600);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+        }
+        
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-16);
+            margin-top: var(--space-24);
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, var(--color-teal-500) 0%, var(--color-teal-600) 100%);
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            color: white;
+        }
+        
+        .metric-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+        }
+        
+        .metric-label {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+        }
+        
+        /* Similar Users */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-16);
+            margin-top: var(--space-24);
+        }
+        
+        .user-card {
+            background: var(--color-gray-200);
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            border-left: 4px solid var(--color-primary);
+        }
+        
+        .similarity-badge {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: var(--space-4) var(--space-12);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+        }
+        
+        .user-stats {
+            font-size: var(--font-size-sm);
+            color: var(--color-slate-500);
+            margin-top: var(--space-8);
+        }
+        
+        /* Exercise List */
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+            margin-top: var(--space-24);
+        }
+        
+        .exercise-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-16);
+            background: var(--color-gray-200);
+            border-radius: var(--radius-base);
+            gap: var(--space-16);
+        }
+        
+        .exercise-name {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .exercise-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+        }
+        
+        .intensity-badge {
+            padding: var(--space-4) var(--space-12);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+        
+        .intensity-light {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .intensity-moderate {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .intensity-vigorous {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .exercise-calories {
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: var(--font-size-lg);
+        }
+        
+        /* Meal Plan */
+        .meal-grid {
+            display: grid;
+            gap: var(--space-16);
+            margin-top: var(--space-24);
+        }
+        
+        .meal-card {
+            background: var(--color-gray-200);
+            padding: var(--space-20);
+            border-radius: var(--radius-base);
+        }
+        
+        .meal-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+        
+        .meal-icon {
+            font-size: var(--font-size-xl);
+        }
+        
+        .meal-title {
+            font-weight: 600;
+            font-size: var(--font-size-lg);
+            color: var(--color-primary);
+        }
+        
+        .meal-name {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-12);
+            font-weight: 500;
+        }
+        
+        .meal-nutrients {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: var(--space-12);
+            padding-top: var(--space-12);
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .nutrient {
+            text-align: center;
+        }
+        
+        .nutrient-value {
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: var(--font-size-base);
+        }
+        
+        .nutrient-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-slate-500);
+        }
+        
+        .meal-totals {
+            background: linear-gradient(135deg, var(--color-teal-500) 0%, var(--color-teal-600) 100%);
+            color: white;
+            padding: var(--space-20);
+            border-radius: var(--radius-base);
+        }
+        
+        .meal-totals .meal-title {
+            color: white;
+        }
+        
+        .meal-totals .nutrient-value,
+        .meal-totals .nutrient-label {
+            color: white;
+        }
+        
+        /* Confidence Badge */
+        .confidence-section {
+            text-align: center;
+            margin-top: var(--space-24);
+        }
+        
+        .confidence-badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: var(--space-16) var(--space-32);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto var(--space-24);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-8);
+        }
+        
+        .loading-subtext {
+            font-size: var(--font-size-sm);
+            opacity: 0.8;
+        }
+        
+        /* Results Section */
+        #results {
+            display: none;
+        }
+        
+        /* Error Message */
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+            border: 1px solid #f5c6cb;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .exercise-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>🧠 Smart Nutrition & Exercise Companion</h1>
+        <div class="header-badge">
+            🤖 ML-Powered | Using KNN Algorithm | 1,636 Data Points
+        </div>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Input Form -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">👤</span>
+                <h2>Personal Information</h2>
+            </div>
+            
+            <form id="userForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Age (years)</label>
+                        <input type="number" class="form-control" id="age" value="28" min="18" max="80" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Gender</label>
+                        <select class="form-control" id="gender" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Height (cm)</label>
+                        <input type="number" class="form-control" id="height" value="175" min="140" max="220" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Weight (kg)</label>
+                        <input type="number" class="form-control" id="weight" value="75" min="40" max="200" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Activity Level (min/day)</label>
+                        <select class="form-control" id="activity" required>
+                            <option value="sedentary">Sedentary (little/no exercise)</option>
+                            <option value="light">Light (1-3 days/week)</option>
+                            <option value="moderate" selected>Moderate (3-5 days/week)</option>
+                            <option value="active">Active (6-7 days/week)</option>
+                            <option value="very_active">Very Active (2x per day)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Daily Steps</label>
+                        <input type="number" class="form-control" id="steps" value="8000" min="0" max="20000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Stress Level (1-10)</label>
+                        <input type="number" class="form-control" id="stress" value="5" min="1" max="10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Experience Level</label>
+                        <select class="form-control" id="fitness" required>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate" selected>Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Primary Goal</label>
+                        <select class="form-control" id="goal" required>
+                            <option value="weight_loss" selected>Weight Loss</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="muscle_gain">Muscle Gain</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    🤖 Generate ML Recommendations
+                </button>
+                
+                <div class="error-message" id="errorMessage"></div>
+            </form>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="results">
+            <!-- Metrics -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2>Calculated Metrics</h2>
+                </div>
+                <div class="metrics-grid" id="metricsGrid"></div>
+            </div>
+            
+            <!-- Similar Users -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">👥</span>
+                    <h2>Similar Users Analysis</h2>
+                    <span class="header-badge" style="margin-left: auto;">🔍 KNN Algorithm Active</span>
+                </div>
+                <div class="users-grid" id="usersGrid"></div>
+            </div>
+            
+            <!-- Exercise Plan -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏋️</span>
+                    <h2>Smart Exercise Plan</h2>
+                </div>
+                <div class="exercise-list" id="exerciseList"></div>
+            </div>
+            
+            <!-- Meal Plan -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🍽️</span>
+                    <h2>Personalized Diet Plan</h2>
+                    <span class="header-badge" style="margin-left: auto;">🇮🇳 1,014 Indian Foods</span>
+                </div>
+                <div class="meal-grid" id="mealGrid"></div>
+            </div>
+            
+            <!-- Confidence -->
+            <div class="card">
+                <div class="confidence-section">
+                    <h3 style="margin-bottom: var(--space-16);">ML Confidence Score</h3>
+                    <div class="confidence-badge" id="confidenceBadge"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div class="loading-text">🧠 Processing ML Algorithms...</div>
+            <div class="loading-subtext">Training KNN • Filtering Exercises • Analyzing 1,014 Foods</div>
+        </div>
+    </div>
+    
+    <script>
+        const form = document.getElementById('userForm');
+        const results = document.getElementById('results');
+        const loading = document.getElementById('loadingOverlay');
+        const errorMsg = document.getElementById('errorMessage');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Hide previous results
+            results.style.display = 'none';
+            errorMsg.style.display = 'none';
+            loading.style.display = 'flex';
+            
+            // Collect user data
+            const userData = {
+                age: parseInt(document.getElementById('age').value),
+                weight_kg: parseFloat(document.getElementById('weight').value),
+                height_cm: parseFloat(document.getElementById('height').value),
+                gender: document.getElementById('gender').value,
+                activity_level: document.getElementById('activity').value,
+                fitness_level: document.getElementById('fitness').value,
+                goal: document.getElementById('goal').value,
+                daily_steps: parseInt(document.getElementById('steps').value) || 7000,
+                stress_level: parseInt(document.getElementById('stress').value) || 5
+            };
+            
+            try {
+                // Call Flask API
+                const response = await fetch('/api/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('API request failed');
+                }
+                
+                const data = await response.json();
+                
+                // Display results
+                displayResults(data);
+                
+                loading.style.display = 'none';
+                results.style.display = 'block';
+                
+                // Scroll to results
+                results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+            } catch (error) {
+                loading.style.display = 'none';
+                errorMsg.textContent = 'Error generating recommendations. Please try again.';
+                errorMsg.style.display = 'block';
+                console.error('Error:', error);
+            }
+        });
+        
+        function displayResults(data) {
+            // Metrics
+            document.getElementById('metricsGrid').innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-value">${data.metrics.bmi}</div>
+                    <div class="metric-label">BMI</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${data.metrics.bmr}</div>
+                    <div class="metric-label">BMR (cal/day)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${data.metrics.tdee}</div>
+                    <div class="metric-label">TDEE (cal/day)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${data.metrics.target_calories}</div>
+                    <div class="metric-label">Target Calories</div>
+                </div>
+            `;
+            
+            // Similar Users
+            document.getElementById('usersGrid').innerHTML = data.similar_users.map((user, i) => `
+                <div class="user-card">
+                    <div class="similarity-badge">${user.similarity}% Match</div>
+                    <div style="font-weight: 600; margin-bottom: 8px;">Similar User ${i + 1}</div>
+                    <div class="user-stats">
+                        Age: ${user.age} • Activity: ${user.activity} min/day<br>
+                        BMI: ${user.bmi}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Exercises
+            document.getElementById('exerciseList').innerHTML = data.exercises.map((ex, i) => `
+                <div class="exercise-item">
+                    <div class="exercise-name">${i + 1}. ${ex.name}</div>
+                    <div class="exercise-meta">
+                        <span class="intensity-badge intensity-${ex.intensity.toLowerCase()}">${ex.intensity}</span>
+                        <span class="exercise-calories">${ex.calories} cal</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Meal Plan
+            const mp = data.meal_plan;
+            document.getElementById('mealGrid').innerHTML = `
+                <div class="meal-card">
+                    <div class="meal-header">
+                        <span class="meal-icon">🌅</span>
+                        <span class="meal-title">Breakfast</span>
+                    </div>
+                    <div class="meal-name">${mp.breakfast.name}</div>
+                    <div class="meal-nutrients">
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.breakfast.calories}</div>
+                            <div class="nutrient-label">Calories</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.breakfast.protein}g</div>
+                            <div class="nutrient-label">Protein</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.breakfast.carbs}g</div>
+                            <div class="nutrient-label">Carbs</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.breakfast.fats}g</div>
+                            <div class="nutrient-label">Fats</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="meal-card">
+                    <div class="meal-header">
+                        <span class="meal-icon">🌤️</span>
+                        <span class="meal-title">Lunch</span>
+                    </div>
+                    <div class="meal-name">${mp.lunch.name}</div>
+                    <div class="meal-nutrients">
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.lunch.calories}</div>
+                            <div class="nutrient-label">Calories</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.lunch.protein}g</div>
+                            <div class="nutrient-label">Protein</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.lunch.carbs}g</div>
+                            <div class="nutrient-label">Carbs</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.lunch.fats}g</div>
+                            <div class="nutrient-label">Fats</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="meal-card">
+                    <div class="meal-header">
+                        <span class="meal-icon">🌙</span>
+                        <span class="meal-title">Dinner</span>
+                    </div>
+                    <div class="meal-name">${mp.dinner.name}</div>
+                    <div class="meal-nutrients">
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.dinner.calories}</div>
+                            <div class="nutrient-label">Calories</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.dinner.protein}g</div>
+                            <div class="nutrient-label">Protein</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.dinner.carbs}g</div>
+                            <div class="nutrient-label">Carbs</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.dinner.fats}g</div>
+                            <div class="nutrient-label">Fats</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="meal-card">
+                    <div class="meal-header">
+                        <span class="meal-icon">☕</span>
+                        <span class="meal-title">Snacks</span>
+                    </div>
+                    <div class="meal-name">${mp.snacks.name}</div>
+                    <div class="meal-nutrients">
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.snacks.calories}</div>
+                            <div class="nutrient-label">Calories</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.snacks.protein}g</div>
+                            <div class="nutrient-label">Protein</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.snacks.carbs}g</div>
+                            <div class="nutrient-label">Carbs</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value">${mp.snacks.fats}g</div>
+                            <div class="nutrient-label">Fats</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="meal-card meal-totals">
+                    <div class="meal-header">
+                        <span class="meal-icon">📊</span>
+                        <span class="meal-title">Daily Totals</span>
+                    </div>
+                    <div class="meal-nutrients">
+                        <div class="nutrient">
+                            <div class="nutrient-value" style="font-size: 24px;">${mp.totals.calories}</div>
+                            <div class="nutrient-label">Total Calories</div>
+                        </div>
+                        <div class="nutrient">
+                            <div class="nutrient-value" style="font-size: 24px;">${mp.totals.protein}g</div>
+                            <div class="nutrient-label">Total Protein</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Confidence
+            document.getElementById('confidenceBadge').textContent = `${data.confidence}% Confidence`;
+        }
+    </script>
+</body>
+</html>
